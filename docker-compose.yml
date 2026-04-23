@@ -1,0 +1,25 @@
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: node-red
+    environment:
+      - TZ=America/Sao_Paulo  
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./data:/data     
+    restart: unless-stopped
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: always
+
+networks:
+  default:
+    name: iot_network
